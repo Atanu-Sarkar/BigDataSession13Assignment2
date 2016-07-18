@@ -1,0 +1,58 @@
+Give brief answers to the questions the below:
+1. What is the difference between TextInputFormat and KeyValueInputFormat class?
+	TextInputFormat: 
+	1) It reads lines of text files and provides the offset of the line as key to the Mapper and actual line as Value to the mapper.
+	2) TextInputFormat is the default file format in Hadoop .
+
+	KeyValueInputFormat: 
+	1) Reads text file and parses lines into key, Val pairs. Everything up to the first tab character is sent as key to the Mapper and the remainder of the line is sent as value to the mapper.
+
+2. How is the splitting of file invoked in Hadoop framework?
+	It is invoked by the Hadoop framework by running getInputSplit()method of the Input format class (like FileInputFormat) defined by the user.
+	
+3. Consider case scenario: In M/R system, - HDFS block size is 64 MB - Input format is FileInputFormat – We have 3 files of size 64K, 65Mb and 127Mb
+	How many input splits will be made by Hadoop framework for each file?
+	64K -1
+	65Mb - 2
+	127Mb - 2
+ 
+4. After the Map phase finishes, the Hadoop framework performs “Partitioning, Shuffle and sort”. Explain each event in brief.
+
+	Partitioning: It is the process of determining which reducer instance will receive which intermediate keys and values. Each mapper must determine for all of its output (key, value) pairs which reducer will receive them. 
+	It is necessary that for any key, regardless of which mapper instance generated it, the destination partition is the same.
+
+	Shuffle: After the first map tasks have completed, the nodes may still be performing several more map tasks each. 
+	But they also begin exchanging the intermediate outputs from the map tasks to where they are required by the reducers. This process of moving map outputs to the reducers is known as shuffling.
+
+	Sort: Each reduce task is responsible for reducing the values associated with several intermediate keys. 
+	The set of intermediate keys on a single node is automatically sorted by Hadoop before they are presented to the Reducer.
+	
+5. What is a Combiner?
+   A Combiner, also known as a semi-reducer, is an optional class that operates by accepting the inputs from the Map class and thereafter passing the output key-value pairs to the Reducer class. 
+   The main function of a Combiner is to summarize the map output records with the same key.
+	
+6. What is Hadoop streaming?
+   Hadoop streaming is a utility that comes with the Hadoop distribution. 
+   This utility allows you to create and run Map/Reduce jobs with any executable or script as the mapper and/or the reducer
+	
+7. What are the most commonly defined input formats in Hadoop and explain each in brief.
+	The two most common Input Formats defined in Hadoop are:
+	– TextInputFormat
+	- KeyValueInputFormat
+	- SequenceFileInputFormat
+	 TextInputFormat is the Hadoop default.
+	 
+	TextInputFormat: It reads lines of text files and provides the offset of the line as key to the Mapper and actual line as Value to the mapper.
+ 	KeyValueInputFormat: Reads text file and parses lines into key, Val pairs. Everything up to the first tab character is sent as key to the Mapper and the remainder of the line is sent as value to the mapper.
+	Sequencefileinputformat is used for reading files in sequence. It is a specific compressed binary file format which is optimized for passing data between the output of one MapReduce job to the
+	input of some other MapReduce job.
+
+8. Explain what is distributed Cache in MapReduce Framework ?
+	DistributedCache is a facility provided by the Map-Reduce framework to cache files (text, archives, jars etc.) needed by applications. Applications specify the files, via urls (hdfs:// or http://) to be cached via the JobConf .
+	
+9. Explain what happens in textinputformat ?
+	It reads lines of text files and provides the offset of the line as key to the Mapper and actual line as Value to the mapper.
+10.Explain what is Sequencefileinputformat?
+	Sequencefileinputformat is used for reading files in sequence. It is a specific compressed binary
+	file format which is optimized for passing data between the output of one MapReduce job to the
+	input of some other MapReduce job.
